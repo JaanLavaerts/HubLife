@@ -12,7 +12,7 @@
 <main>
 
     <span class="text-3xl text-neutral-content font-light">Hello, 
-        <p class="text-6xl text-accent font-light">
+        <p class="text-5xl text-accent font-light">
             {#if userValues.name} 
                 {userValues.name}
             {:else}
