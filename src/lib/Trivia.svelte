@@ -62,7 +62,7 @@
     const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
         checkAnswer(event.target.innerText);
-    }
+        }
     };
 
 

@@ -7,6 +7,8 @@
   import Joke from "./lib/Joke.svelte";
   import Fact from "./lib/Fact.svelte";
   import Trivia from "./lib/Trivia.svelte";
+  import Cats from "./lib/Cats.svelte";
+  import Todo from "./lib/Todo.svelte";
 </script>
 
 <main>
@@ -29,10 +31,9 @@
 
       <br>
 
-      <div class="flex flex-col w-full">
-          <div class="grid h-64 card bg-base-300 rounded-box place-items-center">
-          </div> 
-      </div>
+      <div class="grid h-64 card bg-base-300 rounded-box py-4 px-5">
+          <Todo />
+      </div> 
 
       <br>
 
@@ -48,7 +49,8 @@
           <div class="divider lg:divider-horizontal"></div>
           <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
             <!-- <Fact /> -->
-            <Trivia />
+            <!-- <Trivia /> -->
+            <Cats />
           </div>
       </div>
 
