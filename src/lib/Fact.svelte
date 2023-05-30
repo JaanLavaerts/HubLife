@@ -10,7 +10,7 @@
       const response = await fetch(url);
       const data = await response.json();
       
-      if (data.text.length > 120) {
+      if (data.text.length > 100) {
         fetchData();
         return;
       }
