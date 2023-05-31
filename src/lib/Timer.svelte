@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     
-    export let format;
+    export let USformat;
     export let showSeconds;
 
     let today = new Date();
@@ -40,16 +40,15 @@
     <div class="grid grid-flow-col gap-5 text-center auto-cols-max mt-1">
         <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
           <span class="countdown font-mono text-5xl">
-            {#if format === 12}
+            {#if USformat}
               <span style={`--value:${timeH12};`}></span>
             {:else}
               <span style={`--value:${timeH};`}></span>
             {/if}
         </span>
-            {#if format === 12}
+            {#if USformat}
                 {today.getHours() >= 12 ? 'pm' : 'am'}
-            {/if}
-            {#if format === 24}
+            {:else}
                 hours
             {/if}
         </div> 

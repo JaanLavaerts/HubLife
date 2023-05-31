@@ -11,6 +11,21 @@
   import Todo from "./lib/Todo.svelte";
   import Settings from "./lib/Settings.svelte";
   import SettingsIco from "./lib/icons/settingsIco.svelte";
+  import { settings } from "./store";
+  import { onMount } from "svelte";
+
+  let settingsData = {};
+
+  settings.subscribe(value => {
+    settingsData = value;
+  });
+
+  onMount(() => {
+    if (localStorage.getItem("settings") !== null) {
+      settings.set(JSON.parse(localStorage.getItem("settings")));
+    }
+  });
+
 </script>
 
 <main>
@@ -27,7 +42,7 @@
             <div class="flex justify-around items-center m-10">
               <Hero />
               <div class="divider divider-horizontal"></div>
-              <Timer format={24} showSeconds={true} />
+              <Timer USformat={settingsData.ustimeformat} showSeconds={settingsData.showseconds} />
             </div>
           </div>
           <div class="divider lg:divider-horizontal"></div>
@@ -53,12 +68,22 @@
             <Joke />
           </div>
 
-          <div class="divider lg:divider-horizontal"></div>
+          <!-- <div class="divider lg:divider-horizontal"></div>
           <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
             <Fact />
-            <!-- <Trivia /> -->
-            <!-- <Cats /> -->
+          </div> -->
+
+          <div class="divider lg:divider-horizontal"></div>
+          <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
+            <Trivia />
           </div>
+
+          <!-- <div class="divider lg:divider-horizontal"></div>
+          <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
+            <Cats />
+          </div> -->
+
+
         </div>
 
       </div>
