@@ -1,115 +1,106 @@
 <script>
-    import { settings } from "../store";
-    import { user } from "../store";
-    import { categories } from "../assets/categories.js";
+  import { settings } from "../store";
+  import { user } from "../store";
+  import { categories } from "../assets/categories.js";
 
-    let settingsData = {};
-    let userData = {};
-    const getSettings = () => JSON.parse(localStorage.getItem("settings"));
-    const getUserData = () => JSON.parse(localStorage.getItem("user"));
-    let { ustimeformat: USTimeFormat, showseconds: showSeconds } = getSettings() || {};
-    let { name, place, triviaCategory } = getUserData() || {};
+  let settingsData = { ustimeformat: false, showseconds: false, bored: true, jokes: true, facts: true, trivia: false, cats: false };
+  let userData = {};
+  let currentTheme;
+  const getUserData = () => JSON.parse(localStorage.getItem("user"));
+  let { name, place, triviaCategory } = getUserData() || {};
 
+  if (!localStorage.getItem("settings")) {
+    settings.set(settingsData);
+    localStorage.setItem("settings", JSON.stringify(settingsData));
+  } else {
+    settingsData = JSON.parse(localStorage.getItem("settings"));
+  }
+  if (localStorage.getItem("theme")) {
+    currentTheme = localStorage.getItem("theme");
+    document.documentElement.setAttribute("data-theme", currentTheme);
+  }
+  if (localStorage.getItem("user")) userData = getUserData();
 
-    if (localStorage.getItem("settings")) {
-        settings.set(getSettings());
+  settings.subscribe(value => { settingsData = value; });
+  user.subscribe(value => { userData = value; });
+
+  const toggleSetting = (event, settingName) => {
+    const value = !settingsData[settingName];
+    const selectedCategories = Object.keys(settingsData).filter(key => settingsData[key] && key !== "ustimeformat" && key !== "showseconds");
+    if (value && selectedCategories.length >= 3 && settingName !== "ustimeformat" && settingName !== "showseconds") {
+      setTimeout(() => (event.target.checked = false), 0);
+      return;
     }
-    if (localStorage.getItem("user")) {
-        userData = getUserData();
-    }
+    setTimeout(() => (event.target.checked = value), 0);
+    settings.update(data => { data[settingName] = value; return data; });
+    localStorage.setItem("settings", JSON.stringify(settingsData));
+  };
 
-    settings.subscribe(value => {
-        settingsData = value;
-    });
+  const handleSubmit = () => {
+    localStorage.setItem("user", JSON.stringify({ name, place, triviaCategory }));
+    user.set({ name, place, triviaCategory });
+  };
 
-    user.subscribe(value => {
-        userData = value;
-    });
-    
-    const toggleSetting = (event, settingName) => {
-        const value = !settingsData[settingName];
-        setTimeout(() => event.target.checked = value, 0);
-        settings.update(data => {
-            data[settingName] = value;
-            return data;
-        });
-        localStorage.setItem("settings", JSON.stringify(settingsData));
-    };
-
-    const handleSubmit = () => {
-        localStorage.setItem("user", JSON.stringify({ name, place, triviaCategory }));
-        user.set({ name, place, triviaCategory });
-    };
+  const themeChange = (event) => {
+    const theme = event.target.value;
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  };
 
 </script>
 
 <main>
-    <!-- theme, different components, change name/location/, general info/guides... -->
-    <h2 class="text-3xl font-bold text-primary">Settings</h2>
-    <p class="text-base-content font-thin">Personalize your <span class="text-primary font-bold">HubLife</span> experience.</p>
+  <h2 class="text-3xl font-bold text-secondary">Settings</h2>
+  <p class="text-base-content font-thin">Personalize your <span class="text-primary font-bold">HubLife</span> experience.</p>
 
-    <br>
-    <h3 class="text-xl font-bold text-secondary">General</h3>
-    <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text">12h time format</span>
-          <input type="checkbox" class="toggle toggle-secondary" bind:checked={USTimeFormat} on:click|preventDefault={() => toggleSetting(event, 'ustimeformat')} />
-        </label>
-    </div>
-    <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text">Show seconds</span> 
-          <input type="checkbox" class="toggle toggle-secondary" bind:checked={showSeconds} on:click|preventDefault={() => toggleSetting(event, 'showseconds')} />
-        </label>
-    </div>
+  <br>
+  <h3 class="text-xl font-bold text-secondary">Theme</h3>
+  <div class="form-control flex flex-col">
+      <select class="select select-bordered w-full max-w-xs mt-2" on:change|preventDefault={themeChange}>
+        <option value="dracula">Dracula</option>
+        <option value="dark">Dark</option>
+        <option value="night">Night</option>
+        <option value="mytheme">Yellow</option>
+      </select>
+  </div>
 
-    <br>
-    <h3 class="text-xl font-bold text-secondary">Components</h3>
-    <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text">Bored</span>
-          <input type="checkbox" class="checkbox checkbox-secondary" />
-        </label>
-      </div>
-      <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text">Jokes</span>
-          <input type="checkbox" class="checkbox checkbox-secondary" />
-        </label>
-      </div>
-      <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text">Facts</span>
-          <input type="checkbox" class="checkbox checkbox-secondary" />
-        </label>
-      </div>
-      <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text">Trvia</span>
-          <input type="checkbox" class="checkbox checkbox-secondary" />
-        </label>
-      </div>
-      <div class="form-control">
-        <label class="cursor-pointer label">
-          <span class="label-text">Cats</span>
-          <input type="checkbox" class="checkbox checkbox-secondary" />
-        </label>
-      </div>
+  <br>
+  <h3 class="text-xl font-bold text-secondary">General</h3>
+  <div class="form-control">
+    {#each [['12h time format', 'ustimeformat'], ['Show seconds', 'showseconds']] as item}
+      <label class="cursor-pointer label">
+        <span class="label-text">{item[0]}</span>
+        <input type="checkbox" class="toggle toggle-secondary" bind:checked={settingsData[item[1]]} on:click|preventDefault={() => toggleSetting(event, item[1])} />
+      </label>
+    {/each}
+  </div>  
 
-    <br>
-    <h3 class="text-xl font-bold text-secondary">You</h3>
-    <form on:submit|preventDefault={handleSubmit}>
-        <input class="input input-bordered w-full max-w-xs mt-2" type="text" bind:value={name} placeholder="Name" />
-        <input class="input input-bordered w-full max-w-xs mt-2" type="text" bind:value={place} placeholder="City" />
-        <select class="select select-bordered w-full max-w-xs mt-2" bind:value={triviaCategory}>
-            {#each categories as category}
-                <option value={category.id}>{category.name}</option>
-            {/each}
-        </select>
-        <button type="submit" class="btn btn-secondary btn-xs w-full max-w-xs mt-2">Save</button>
-    </form>
+  <br>
 
-    <footer class="fixed bottom-0 w-full p-2 text-base-content text-sm font-thin">
-        <a class="underline" href="https://www.linkedin.com/in/jaan-lavaerts/" target="_blank">Jaan Lavaerts</a> - HubLife :)
-    </footer>
+  <h3 class="text-xl font-bold text-secondary">Fun Stuff <span class="text-base-content font-thin text-sm">(max. 3)</span></h3>
+  <div class="form-control">
+    {#each ['Bored', 'Jokes', 'Facts', 'Trivia', 'Cats'] as item}
+      <label class="cursor-pointer label">
+        <span class="label-text">{item}</span>
+        <input type="checkbox" class="checkbox checkbox-secondary" bind:checked={settingsData[item.toLowerCase()]} on:click|preventDefault={() => toggleSetting(event, item.toLowerCase())} />
+      </label>
+    {/each}
+  </div>
+
+  <br>
+  <h3 class="text-xl font-bold text-secondary">You</h3>
+  <form on:submit|preventDefault={handleSubmit}>
+    <input class="input input-bordered w-full max-w-xs mt-2" type="text" bind:value={name} placeholder="Name" />
+    <input class="input input-bordered w-full max-w-xs mt-2" type="text" bind:value={place} placeholder="City" />
+    <select class="select select-bordered w-full max-w-xs mt-2" bind:value={triviaCategory}>
+      {#each categories as category}
+        <option value={category.id}>{category.name}</option>
+      {/each}
+    </select>
+    <button type="submit" class="btn btn-secondary btn-xs w-full max-w-xs mt-2">Save</button>
+  </form>
+
+  <footer class="fixed bottom-0 w-full p-2 text-base-content text-sm font-thin">
+    &copy; <a class="underline" href="https://www.linkedin.com/in/jaan-lavaerts/" target="_blank">Jaan Lavaerts</a> - HubLife :)
+  </footer>
 </main>

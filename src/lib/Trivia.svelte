@@ -42,6 +42,7 @@
             .replace(/&amp;/g, "&")
             .replace(/&eacute;/g, "é")
             .replace(/&rsquo;/g, "'")
+            .replace(/&Aring;/g, "Å")
     };
 
     const checkAnswer = (answer) => {

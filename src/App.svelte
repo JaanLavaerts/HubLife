@@ -12,9 +12,10 @@
   import Settings from "./lib/Settings.svelte";
   import SettingsIco from "./lib/icons/settingsIco.svelte";
   import { settings } from "./store";
-  import { onMount } from "svelte";
+  import { onMount, afterUpdate } from "svelte";
 
   let settingsData = {};
+  let components = [];
 
   settings.subscribe(value => {
     settingsData = value;
@@ -26,6 +27,15 @@
     }
   });
 
+  afterUpdate(() => {
+    components = [
+      { component: Bored, show: settingsData.bored },
+      { component: Joke, show: settingsData.jokes },
+      { component: Fact, show: settingsData.facts },
+      { component: Trivia, show: settingsData.trivia },
+      { component: Cats, show: settingsData.cats },
+    ];
+  });
 </script>
 
 <main>
@@ -60,30 +70,14 @@
         <br>
 
         <div class="flex flex-col w-full lg:flex-row">
-          <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box items-center justify-center">
-            <Bored />
-          </div>
-          <div class="divider lg:divider-horizontal"></div>
-          <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
-            <Joke />
-          </div>
-
-          <!-- <div class="divider lg:divider-horizontal"></div>
-          <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
-            <Fact />
-          </div> -->
-
-          <div class="divider lg:divider-horizontal"></div>
-          <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
-            <Trivia />
-          </div>
-
-          <!-- <div class="divider lg:divider-horizontal"></div>
-          <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
-            <Cats />
-          </div> -->
-
-
+          {#each components.filter(component => component.show) as { component: Component }, index}
+            <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
+              <Component />
+            </div>
+            {#if index !== components.filter(component => component.show).length - 1}
+              <div class="divider lg:divider-horizontal"></div>
+            {/if}
+          {/each}
         </div>
 
       </div>

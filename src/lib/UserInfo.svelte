@@ -34,7 +34,6 @@
 </script>
 
 <main>
-    <!-- <button class="btn btn-primary" on:click={() => localStorage.removeItem('user')}>Reset</button> -->
     <input type="checkbox" id="my-modal-3" class="modal-toggle" bind:checked={showModal} />
 
     <div class="modal">
@@ -48,7 +47,8 @@
                 <form on:submit|preventDefault={handleSubmit}>
                     <input class="input input-bordered my-2" type="text" bind:value={name} placeholder="Name" />
                     <input class="input input-bordered my-2" type="text" bind:value={place} placeholder="City" />
-                    <select class="select select-bordered w-full max-w-xs" bind:value={triviaCategory}>
+                    <select class="select select-bordered w-full max-w-xs text-gray-400 font-normal text-base" bind:value={triviaCategory}>
+                        <option value="" disabled selected>Trivia Category</option>
                         {#each categories as category}
                             <option value={category.id}>{category.name}</option>
                         {/each}

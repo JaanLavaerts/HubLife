@@ -56,7 +56,7 @@
 
     {#each todoList as todo}
         {#if todo.completed}
-            <div on:click={() => completeTodo(todo)} on:keydown={handleKeyDown} class="cursor-pointer flex flex-row bg-base-200 mb-2 p-2 items-center justify-between rounded-lg line-through">
+            <div on:click={() => completeTodo(todo)} on:keydown={handleKeyDown} class="cursor-pointer flex flex-row bg-base-200 mb-2 p-2 items-center justify-between rounded-lg line-through hover:bg-base-100">
                 <div class="text-base-content text-sm font-sm">
                     <span class="text-neutral-content">
                         {todo.name}
