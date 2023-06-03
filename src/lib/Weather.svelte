@@ -60,7 +60,7 @@
                 <div class="stat-value text-secondary font-medium">{temp}°C</div>
                 <div class="stat-desc">Feels like {feels_like} °C</div>
             </div>
-            <div class="stat">
+            <div class="stat hidden md:inline-grid">
                 <Droplets />
                 <div class="stat-value text-secondary font-medium">{humidity}%</div>
                 <div class="stat-desc">{windSpeed}km/h wind</div>

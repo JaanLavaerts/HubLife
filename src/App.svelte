@@ -13,6 +13,8 @@
   import SettingsIco from "./lib/icons/settingsIco.svelte";
   import { settings } from "./store";
   import { onMount, afterUpdate } from "svelte";
+  import MediaQuery from "./lib/util/MediaQuery.svelte";
+
 
   let settingsData = {};
   let components = [];
@@ -48,13 +50,29 @@
       <div class="container max-w-6xl mx-auto p-3 lg:mt-20">
         <UserInfo />
         <div class="flex flex-col w-full lg:flex-row">
-          <div class="grid flex-grow h-48 card bg-base-300 rounded-box">
-            <div class="flex justify-around items-center m-10">
-              <Hero />
-              <div class="divider divider-horizontal"></div>
-              <Timer USformat={settingsData.ustimeformat} showSeconds={settingsData.showseconds} />
-            </div>
+
+          <div class="grid flex-grow card bg-base-300 rounded-box">
+            <MediaQuery query="(min-width: 840px)" let:matches>
+              {#if matches}
+                <div class="h-48 card bg-base-300 rounded-box">
+                  <div class="flex justify-around items-center m-10">
+                    <Hero mobile={false}/>
+                    <div class="divider divider-horizontal"></div>
+                    <Timer USformat={settingsData.ustimeformat} showSeconds={settingsData.showseconds} />
+                  </div>
+                </div>
+              {:else}
+                <div class="h-34 pt-3 card bg-base-300 rounded-box place-items-center">
+                  <Hero mobile={true}/>
+                </div>
+                <div class="divider sm:divider-horizontal"></div>
+                <div class="h-34 pb-5 card bg-base-300 rounded-box place-items-center">
+                  <Timer USformat={settingsData.ustimeformat} showSeconds={settingsData.showseconds} />
+                </div>
+              {/if}
+            </MediaQuery>
           </div>
+
           <div class="divider lg:divider-horizontal"></div>
           <div class="grid flex-grow h-48 card bg-base-300 rounded-box place-items-center">
             <Weather />
@@ -70,9 +88,11 @@
         <br>
 
         <div class="flex flex-col w-full lg:flex-row">
-          {#each components.filter(component => component.show) as { component: Component }, index}
+          {#each components.filter(component => component.show) as { component }, index}
             <div class="grid flex-grow h-48 lg:w-48 card bg-base-300 rounded-box place-items-center">
-              <Component />
+              {#if component}
+                <svelte:component this={component} />
+              {/if}
             </div>
             {#if index !== components.filter(component => component.show).length - 1}
               <div class="divider lg:divider-horizontal"></div>

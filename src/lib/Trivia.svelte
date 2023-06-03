@@ -2,7 +2,6 @@
     import { onMount } from "svelte";
     import { user } from "../store";
     import Spinner from "./icons/spinner.svelte";
-    import Gamepad_2 from "./icons/gamepad-2.svelte";
 
     let category;
     let url;
@@ -30,7 +29,6 @@
             return result;
         });
         answerStatus = {};
-        console.log(url);
     };
 
     onMount(fetchData);

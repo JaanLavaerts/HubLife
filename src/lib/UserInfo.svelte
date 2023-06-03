@@ -45,7 +45,7 @@
                 </h3>
                 <p class="py-3">Start by filling in your name, city and favorite trivia category.</p>
                 <form on:submit|preventDefault={handleSubmit}>
-                    <input class="input input-bordered my-2" type="text" bind:value={name} placeholder="Name" />
+                    <input class="input input-bordered md:my-2" type="text" bind:value={name} placeholder="Name" />
                     <input class="input input-bordered my-2" type="text" bind:value={place} placeholder="City" />
                     <select class="select select-bordered w-full max-w-xs text-gray-400 font-normal text-base" bind:value={triviaCategory}>
                         <option value="" disabled selected>Trivia Category</option>

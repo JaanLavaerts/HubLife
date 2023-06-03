@@ -57,10 +57,13 @@
   <h3 class="text-xl font-bold text-secondary">Theme</h3>
   <div class="form-control flex flex-col">
       <select class="select select-bordered w-full max-w-xs mt-2" on:change|preventDefault={themeChange}>
-        <option value="dracula">Dracula</option>
-        <option value="dark">Dark</option>
-        <option value="night">Night</option>
-        <option value="mytheme">Yellow</option>
+        <option selected={currentTheme === "dark"} value="dark">Dark</option>
+        <option selected={currentTheme === "light"} value="light">Light</option>
+        <option selected={currentTheme === "dracula"} value="dracula">Dracula</option>
+        <option selected={currentTheme === "night"} value="night">Night</option>
+        <option selected={currentTheme === "yellow"} value="yellow">Yellow</option>
+        <option selected={currentTheme === "forest"} value="forest">Forest</option>
+        <option selected={currentTheme === "halloween"} value="halloween">Halloween</option>
       </select>
   </div>
 

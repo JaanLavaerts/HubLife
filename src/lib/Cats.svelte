@@ -9,7 +9,11 @@
     const fetchData = async () => {
         const resImg = await fetch(urlImg);
         const dataImg = await resImg.json();
-        img = dataImg[0].url
+        const rectangularImages = dataImg.filter(image => {
+            const { width, height } = image;
+            return width > height; // Modify this condition as needed
+        });
+        img = rectangularImages[0].url;
     };
     
     onMount(fetchData);
