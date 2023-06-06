@@ -24,16 +24,18 @@
   
   <main>
     {#if setup}
-        <div class="items-center text-center">
-            <button class="text-secondary" on:click={fetchData}><Refresh /></button>
-            <div class="card items-center text-center bg-inherit text-neutral-content cursor-pointer mx-3 p-2">
+      <div>
+        <button class="text-secondary absolute top-0 right-0 p-3" on:click={fetchData}>
+          <Refresh />
+        </button>
+        <div class="card items-center text-center bg-inherit text-neutral-content cursor-pointer mx-3 p-2">
             <label class="swap swap-flip text-xl font-medium">
                 <input type="checkbox" />
                 <div class="swap-off">{setup}</div>
                 <div class="swap-on">{punchline}</div>
             </label>
-            </div>
         </div>
+      </div>
     {:else}
         <Spinner />
     {/if}

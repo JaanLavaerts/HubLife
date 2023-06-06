@@ -75,7 +75,7 @@
 
           <div class="divider lg:divider-horizontal"></div>
           <div class="grid flex-grow h-48 card bg-base-300 rounded-box place-items-center">
-            <Weather />
+            <Weather useFarenheit={settingsData.usefarenheit} />
           </div>
         </div>
 

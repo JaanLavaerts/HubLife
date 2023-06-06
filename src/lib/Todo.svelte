@@ -54,6 +54,13 @@
         </button>
     </form>
 
+    {#if todoList == null || todoList.length === 0}
+    <div class="flex items-center justify-center h-40">
+        <div class="text-center">
+          <h3 class="font-thin text-2xl text-gray-700">No tasks</h3>
+        </div>
+    </div>
+    {/if}
     {#each todoList as todo}
         {#if todo.completed}
             <div on:click={() => completeTodo(todo)} on:keydown={handleKeyDown} class="cursor-pointer flex flex-row bg-base-200 mb-2 p-2 items-center justify-between rounded-lg line-through hover:bg-base-100">

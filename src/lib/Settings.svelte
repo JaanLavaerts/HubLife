@@ -3,7 +3,7 @@
   import { user } from "../store";
   import { categories } from "../assets/categories.js";
 
-  let settingsData = { ustimeformat: false, showseconds: false, bored: true, jokes: true, facts: true, trivia: false, cats: false };
+  let settingsData = { usefarenheit: false, ustimeformat: false, showseconds: true, bored: true, jokes: false, facts: true, trivia: true, cats: false };
   let userData = {};
   let currentTheme;
   const getUserData = () => JSON.parse(localStorage.getItem("user"));
@@ -26,8 +26,8 @@
 
   const toggleSetting = (event, settingName) => {
     const value = !settingsData[settingName];
-    const selectedCategories = Object.keys(settingsData).filter(key => settingsData[key] && key !== "ustimeformat" && key !== "showseconds");
-    if (value && selectedCategories.length >= 3 && settingName !== "ustimeformat" && settingName !== "showseconds") {
+    const selectedCategories = Object.keys(settingsData).filter(key => settingsData[key] && key !== "ustimeformat" && key !== "showseconds" && key !== "usefarenheit");
+    if (value && selectedCategories.length >= 3 && settingName !== "ustimeformat" && settingName !== "showseconds" && settingName !== "usefarenheit") {
       setTimeout(() => (event.target.checked = false), 0);
       return;
     }
@@ -70,7 +70,7 @@
   <br>
   <h3 class="text-xl font-bold text-secondary">General</h3>
   <div class="form-control">
-    {#each [['12h time format', 'ustimeformat'], ['Show seconds', 'showseconds']] as item}
+    {#each [['12h time format', 'ustimeformat'], ['Show seconds', 'showseconds'], ['Use farenheit', 'usefarenheit']] as item}
       <label class="cursor-pointer label">
         <span class="label-text">{item[0]}</span>
         <input type="checkbox" class="toggle toggle-secondary" bind:checked={settingsData[item[1]]} on:click|preventDefault={() => toggleSetting(event, item[1])} />

@@ -3,12 +3,15 @@
     import ThermometerSun from "./icons/thermometer-sun.svelte";
     import ThermometerSnowflake from "./icons/thermometer-snowflake.svelte";
     import Droplets from "./icons/droplets.svelte";
-  import Spinner from "./icons/spinner.svelte";
+
+    export let useFarenheit;
 
     let userValues = {};
     let weatherData = {};
     let temp;
+    let tempFarenheit;
     let feels_like;
+    let feels_likeFarenheit;
     let humidity;
     let windSpeed;
     let description;
@@ -26,7 +29,9 @@
         const data = await response.json();
         weatherData = data;
         temp = Math.round(weatherData.main.temp - 273.15);
+        tempFarenheit = Math.round((weatherData.main.temp - 273.15) * 9/5 + 32);
         feels_like = Math.round(weatherData.main.feels_like - 273.15);
+        feels_likeFarenheit = Math.round((weatherData.main.feels_like - 273.15) * 9/5 + 32);
         humidity = weatherData.main.humidity;
         windSpeed = weatherData.wind.speed;
         description = weatherData.weather[0].description;
@@ -57,8 +62,13 @@
                 {:else}
                 <ThermometerSnowflake />
                 {/if}
+                {#if !useFarenheit}
                 <div class="stat-value text-secondary font-medium">{temp}°C</div>
                 <div class="stat-desc">Feels like {feels_like} °C</div>
+                {:else}
+                <div class="stat-value text-secondary font-medium">{tempFarenheit}°</div>
+                <div class="stat-desc">Feels like {feels_likeFarenheit} °</div>
+                {/if}
             </div>
             <div class="stat hidden md:inline-grid">
                 <Droplets />
@@ -67,7 +77,9 @@
             </div>
         </div>
     {:else}
-        <Spinner />
+        <h3 class="font-medium text-center mt-5 text-neutral-content">
+            Please enter a valid place name.
+        </h3>
     {/if}
 
 
