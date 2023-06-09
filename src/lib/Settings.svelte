@@ -103,7 +103,7 @@
     <button type="submit" class="btn btn-secondary btn-xs w-full max-w-xs mt-2">Save</button>
   </form>
 
-  <footer class="fixed bottom-0 w-full p-2 text-base-content text-sm font-thin">
+  <footer class="p-2 text-base-content text-sm font-thin">
     &copy; <a class="underline" href="https://www.linkedin.com/in/jaan-lavaerts/" target="_blank">Jaan Lavaerts</a> - HubLife :)
   </footer>
 </main>

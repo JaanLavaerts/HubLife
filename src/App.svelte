@@ -47,7 +47,7 @@
     <div class="drawer-content">
       <label for="my-drawer-4" class="drawer-button btn m-4 float-right"><SettingsIco /></label>
 
-      <div class="container max-w-6xl mx-auto p-3 lg:mt-20">
+      <div class="container max-w-6xl mx-auto p-3">
         <UserInfo />
         <div class="flex flex-col w-full lg:flex-row">
 
@@ -110,3 +110,18 @@
     </div>
   </div>
 </main>
+
+<style>
+  /* Hide the scrollbar */
+  .drawer-side {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+  }
+
+  /* Firefox scrollbar fix */
+  .drawer-side::-moz-scrollbar {
+    display: none;
+  }
+</style>
+
