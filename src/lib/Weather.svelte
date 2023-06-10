@@ -25,7 +25,7 @@
     });
 
     const getWeather = async () => {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userValues.place}&appid=7746c5d65c4469cde6ef229343642f51`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userValues.place}&appid=`);
         const data = await response.json();
         weatherData = data;
         temp = Math.round(weatherData.main.temp - 273.15);
