@@ -41,11 +41,11 @@
 </script>
 
 <main>
-  <div class="drawer drawer-end">
+  <div class="drawer">
     <input id="my-drawer-4" type="checkbox" class="drawer-toggle btn btn-secondary" />
     
     <div class="drawer-content">
-      <label for="my-drawer-4" class="drawer-button btn m-4 float-right"><SettingsIco /></label>
+      <label for="my-drawer-4" class="drawer-button m-2 btn"><SettingsIco /></label>
 
       <div class="container max-w-6xl mx-auto p-3">
         <UserInfo />
@@ -112,16 +112,6 @@
 </main>
 
 <style>
-  /* Hide the scrollbar */
-  .drawer-side {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    overflow-y: scroll;
-  }
 
-  /* Firefox scrollbar fix */
-  .drawer-side::-moz-scrollbar {
-    display: none;
-  }
 </style>
 
