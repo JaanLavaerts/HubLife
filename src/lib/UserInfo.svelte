@@ -38,7 +38,6 @@
 
     <div class="modal backdrop-blur" id="modal-3">
         <div class="modal-box relative">
-            <button class="btn btn-sm btn-circle absolute right-2 top-2" on:click={toggleModal}>✕</button>
             <div class="form-control text-center">
                 <h3 class="font-bold text-2xl">Welcome to 
                     <span class="text-primary">HubLife</span>.
