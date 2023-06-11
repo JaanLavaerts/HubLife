@@ -19,13 +19,15 @@
     let country;
     let icon;
 
+    const API_KEY = import.meta.env.VITE_API_KEY;
+
 
     user.subscribe((value) => {
         userValues = value;
     });
 
     const getWeather = async () => {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userValues.place}&appid=`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userValues.place}&appid=${API_KEY}`);
         const data = await response.json();
         weatherData = data;
         temp = Math.round(weatherData.main.temp - 273.15);
