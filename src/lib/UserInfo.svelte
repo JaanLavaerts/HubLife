@@ -36,7 +36,7 @@
 <main>
     <input type="checkbox" id="my-modal-3" class="modal-toggle" bind:checked={showModal} />
 
-    <div class="modal">
+    <div class="modal backdrop-blur" id="modal-3">
         <div class="modal-box relative">
             <button class="btn btn-sm btn-circle absolute right-2 top-2" on:click={toggleModal}>✕</button>
             <div class="form-control text-center">
